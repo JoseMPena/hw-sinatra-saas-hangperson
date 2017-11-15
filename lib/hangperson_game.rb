@@ -8,8 +8,12 @@ class HangpersonGame
   # def initialize()
   # end
   
+  attr_accessor :word, :guesses, :wrong_guesses
+  
   def initialize(word)
-    @word = word
+    @word = word.downcase
+    @guesses = ''
+    @wrong_guesses = ''
   end
 
   # You can test it by running $ bundle exec irb -I. -r app.rb
@@ -22,6 +26,34 @@ class HangpersonGame
     Net::HTTP.new('watchout4snakes.com').start { |http|
       return http.post(uri, "").body
     }
+  end
+
+  def guess(letter)
+    raise ArgumentError unless letter =~ /\w/
+    letter = letter.downcase
+    add_to_list (@word.include?(letter) ? @guesses : @wrong_guesses), letter
+  end
+
+  def add_to_list(list, letter)
+    return false if list.include?(letter)
+    list << letter
+    true
+  end
+
+  def word_with_guesses
+    guessed_letters = ''
+    @word.chars do |letter|
+      guessed_letters << (@guesses.include?(letter) ? letter : '-')
+    end
+    guessed_letters
+  end
+
+  def check_win_or_lose
+    if @wrong_guesses.size > 6
+      :lose
+    else
+      @guesses.chars.sort == @word.chars.sort ? :win : :play
+    end
   end
 
 end

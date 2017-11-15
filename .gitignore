@@ -1,3 +1,6 @@
 coverage
 .ruby-version
 *.swp
+
+# Rubymine stuff
+.idea
