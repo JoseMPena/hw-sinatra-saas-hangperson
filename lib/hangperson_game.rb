@@ -30,13 +30,10 @@ class HangpersonGame
 
   def guess(letter)
     raise ArgumentError unless letter =~ /\w/
-    letter = letter.downcase
-    add_to_list (@word.include?(letter) ? @guesses : @wrong_guesses), letter
-  end
-
-  def add_to_list(list, letter)
-    return false if list.include?(letter)
-    list << letter
+    letter.downcase!
+    collection = (@word.include?(letter) ? @guesses : @wrong_guesses)
+    return false if collection.include?(letter)
+    collection << letter
     true
   end
 
@@ -52,7 +49,7 @@ class HangpersonGame
     if @wrong_guesses.size > 6
       :lose
     else
-      @guesses.chars.sort == @word.chars.sort ? :win : :play
+      @guesses.chars.sort == @word.squeeze.chars.sort ? :win : :play
     end
   end
 

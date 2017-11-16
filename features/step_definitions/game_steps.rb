@@ -24,7 +24,7 @@ When /^I guess "(.*)"(?: again)?$/ do |letter|
 end
 
 When /^I make the following guesses:(.*)$/ do |guesses|
-  guesses = guesses.gsub(' ', '').split(',')
+  guesses = guesses.delete(' ').split(',')
   guesses.each do |letter|
     fill_in("guess", :with => letter)
     click_button("Guess!")
