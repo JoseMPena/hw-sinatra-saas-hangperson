@@ -17,6 +17,7 @@ When /^I start a new game with word "(.*)"$/ do |word|
 end
 
 When /^I guess "(.*)"(?: again)?$/ do |letter|
+  # save_and_open_page
   letter.downcase!
   fill_in("guess", :with => letter)
   click_button("Guess!")
