@@ -49,7 +49,7 @@ class HangpersonGame
     if @wrong_guesses.size > 6
       :lose
     else
-      @guesses.chars.sort == @word.squeeze.chars.sort ? :win : :play
+      @guesses.chars.sort == @word.chars.uniq.sort ? :win : :play
     end
   end
 
